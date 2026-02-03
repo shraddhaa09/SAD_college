@@ -1,16 +1,26 @@
-# my_first_project
+# SAD_college – Mobile Application Development (Flutter)
 
-A new Flutter project.
+This repository contains laboratory experiments for the **Mobile Application Development** course conducted at Vishwakarma Institute of Technology.
 
-## Getting Started
+## Course Objectives
+- Understand the basics of Dart and Flutter for cross-platform mobile development
+- Design responsive user interfaces using Flutter widgets
+- Implement user input handling, navigation, and basic state management
+- Build, test, and run simple mobile applications
 
-This project is a starting point for a Flutter application.
+## Laboratory Experiments
+1. Introduction to Flutter & Dart
+2. Flutter Project Structure & Widgets
+3. Layouts and Styling
+4. User Input & Forms
+5. Navigation and Routing
+6. State Management Basics
 
-A few resources to get you started if this is your first Flutter project:
+## Technologies Used
+- Dart
+- Flutter
+- Android Studio / VS Code
+- Android Emulator
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Outcome
+This repository serves as a practical reference for Flutter fundamentals and supports academic learning, mini-projects, and internship preparation.
