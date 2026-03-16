@@ -1,127 +1,117 @@
 import 'package:flutter/material.dart';
+import 'models/product_model.dart';
+import 'services/api_service.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Login App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const LoginPage(),
+      home: ProductScreen(),
     );
   }
 }
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-
+class ProductScreen extends StatefulWidget {
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  _ProductScreenState createState() => _ProductScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController userIdController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+class _ProductScreenState extends State<ProductScreen> {
 
-  bool isPasswordHidden = true;
+  late Future<List<Product>> products;
 
-  void login() {
-    String userId = userIdController.text.trim();
-    String password = passwordController.text.trim();
-
-    if (userId.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter User ID and Password')),
-      );
-      return;
-    }
-
-    // Temporary login logic
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Login successful for $userId')),
-    );
+  @override
+  void initState() {
+    super.initState();
+    products = ApiService().fetchProducts();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Page'),
-        centerTitle: true,
+        title: Text("Fake Store Products"),
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+      body: FutureBuilder<List<Product>>(
 
-            const Text(
-              'Welcome Back',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+        future: products,
 
-            const SizedBox(height: 30),
+        builder: (context, snapshot) {
 
-            TextField(
-              controller: userIdController,
-              decoration: const InputDecoration(
-                labelText: 'User ID',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.person),
-              ),
-            ),
+          if (snapshot.hasData) {
 
-            const SizedBox(height: 20),
+            return ListView.builder(
 
-            TextField(
-              controller: passwordController,
-              obscureText: isPasswordHidden,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: const OutlineInputBorder(),
-                prefixIcon: const Icon(Icons.lock),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    isPasswordHidden
-                        ? Icons.visibility_off
-                        : Icons.visibility,
+              itemCount: snapshot.data!.length,
+
+              itemBuilder: (context, index) {
+
+                Product product = snapshot.data![index];
+
+                return Card(
+                  margin: EdgeInsets.all(10),
+
+                  child: Column(
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: [
+
+                      Image.network(product.image, height: 150),
+
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          product.title,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text(product.description),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                            "Category: ${product.category}"
+                        ),
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          "Price: \$${product.price}",
+                          style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  onPressed: () {
-                    setState(() {
-                      isPasswordHidden = !isPasswordHidden;
-                    });
-                  },
-                ),
-              ),
-            ),
+                );
+              },
+            );
 
-            const SizedBox(height: 30),
+          }
 
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: login,
-                child: const Text(
-                  'LOGIN',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ),
-          ],
-        ),
+          else if (snapshot.hasError) {
+            return Center(child: Text("Error loading data"));
+          }
+
+          return Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
