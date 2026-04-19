@@ -20,7 +20,7 @@ class _ProductsPageState extends State<ProductsPage> {
     _fetchProducts();
   }
 
-  // GET - fetch all products
+  // GET - fetch all products.
   Future<void> _fetchProducts() async {
     setState(() => _isLoading = true);
 
@@ -75,7 +75,7 @@ class _ProductsPageState extends State<ProductsPage> {
     }
   }
 
-  // PUT - edit product
+  // PUT - edit product.
   Future<void> _editProduct(Product product) async {
     final response = await http.put(
       Uri.parse('https://fakestoreapi.com/products/${product.id}'),
