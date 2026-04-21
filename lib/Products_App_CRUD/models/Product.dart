@@ -4,7 +4,7 @@ class Rating {
 
   Rating({required this.rate, required this.count});
 
-  factory Rating.fromJson(Map<String, dynamic> json) {
+  factory Rating.fromJson(Map<String, dynamic> json) {//returns a nested object
     return Rating(
       rate: (json['rate'] as num).toDouble(),
       count: json['count'],

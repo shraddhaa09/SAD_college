@@ -5,11 +5,9 @@ import 'package:my_first_project/configurations.dart';
 class Content extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return ContentState();
   }
 }
-
 
 class ContentState extends State<Content> {
 

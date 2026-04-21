@@ -5,16 +5,13 @@ import 'register_page.dart';
 import 'utility.dart';
 
 void main() async {
-  // 1. We must ensure Flutter is initialized before interacting with native device storage
+
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 2. Fetch the SharedPreferences instance
   final prefs = await SharedPreferences.getInstance();
 
-  // 3. Read the 'isLoggedIn' flag. If it doesn't exist yet, default to false.
   final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 
-  // Pass the flag into our app
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 

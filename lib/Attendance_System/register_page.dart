@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'configurations.dart';
 import 'utility.dart';
 
-class RegisterPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {//_emailError and _passwordError change
   const RegisterPage({super.key});
 
   @override
@@ -24,34 +24,28 @@ class _RegisterPageState extends State<RegisterPage> {
     String password = _passwordController.text.trim();
     String confirm = _confirmController.text.trim();
 
-    // reset errors first
     emailError = '';
     passwordError = '';
     confirmError = '';
 
-    // email validation
     if (!Utility.isValidEmail(email)) {
       emailError = "Invalid email";
     }
 
-    // check already exists
     else if (Configurations.registeredUsers
         .any((user) => user['email'] == email)) {
       emailError = "Email already exists";
     }
 
-    // password validation
     else if (!Utility.isValidPassword(password)) {
       passwordError = "Weak password";
     }
 
-    // confirm password
     else if (password != confirm) {
       confirmError = "Passwords not match";
     }
 
     else {
-      // save user
       Configurations.registeredUsers.add({
         'email': email,
         'password': password
@@ -66,7 +60,6 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.pop(context);
     }
 
-    // update UI once
     setState(() {});
   }
 

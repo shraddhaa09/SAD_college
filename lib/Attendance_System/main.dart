@@ -25,8 +25,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// StatefulWidget for login screen
-// uses setState to show validation errors below fields
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -50,19 +48,16 @@ class _MyHomePageState extends State<MyHomePage> {
     String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
 
-    // validate email format
     if (!Utility.isValidEmail(email)) {
       setState(() => _emailError = 'Please enter a valid email ID');
       return;
     }
 
-    // validate password format
     if (!Utility.isValidPassword(password)) {
       setState(() => _passwordError = 'Invalid password format');
       return;
     }
 
-    // check against registered users list
     bool found = Configurations.registeredUsers
         .any((user) => user['email'] == email && user['password'] == password);
 
@@ -71,7 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
       return;
     }
 
-    // navigate to attendance screen, pass logged in email
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -122,7 +116,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 40),
 
-            // email field
             TextField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
@@ -138,7 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 16),
 
-            // password field
             TextField(
               controller: _passwordController,
               obscureText: true,
@@ -153,7 +145,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 30),
 
-            // login button
             SizedBox(
               height: 50,
               child: ElevatedButton(
@@ -170,7 +161,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 16),
 
-            // go to signup
             Center(
               child: GestureDetector(
                 onTap: () {

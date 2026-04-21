@@ -12,8 +12,7 @@ class Content extends StatefulWidget {
 
 class _ContentState extends State<Content> {
 
-  // count present days
-  int get _presentCount =>
+  int get _presentCount =>//computes its value every time it is accessed instead of storing it and instead of a variable to avoid manual synchronization
       Configurations.attendance.where((a) => a['isPresent'] == true).length;
 
   @override
@@ -55,7 +54,7 @@ class _ContentState extends State<Content> {
                 return AttendanceItem(
                   index: index,
                   onToggle: () {
-                    setState(() {}); // update count
+                    setState(() {});
                   },
                 );
               },
@@ -107,10 +106,9 @@ class _AttendanceItemState extends State<AttendanceItem> {
           mainAxisSize: MainAxisSize.min,
           children: [
 
-            // Present button
             GestureDetector(
               onTap: () {
-                if (!isPresent) toggle();
+                if (!isPresent) toggle();//why before toggle if isPresent is already true (already Present), tapping P again should do nothing
               },
               child: Container(
                 width: 35,

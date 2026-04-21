@@ -15,14 +15,14 @@ class _ProductsPageState extends State<ProductsPage> {
   bool _isLoading = true;
 
   @override
-  void initState() {
+  void initState() {// runs exactly once
     super.initState();
     _fetchProducts();
   }
 
   // GET - fetch all products.
   Future<void> _fetchProducts() async {
-    setState(() => _isLoading = true);
+    setState(() => _isLoading = true);//data is currently being fetched
 
     final response = await http.get(
       Uri.parse('https://fakestoreapi.com/products'),
@@ -39,7 +39,6 @@ class _ProductsPageState extends State<ProductsPage> {
     }
   }
 
-  // POST - add new product
   Future<void> _addProduct() async {
     final response = await http.post(
       Uri.parse('https://fakestoreapi.com/products'),
@@ -56,8 +55,8 @@ class _ProductsPageState extends State<ProductsPage> {
     if (response.statusCode == 200 || response.statusCode == 201) {
       Map<String, dynamic> data = jsonDecode(response.body);
       setState(() {
-        _products.insert(
-          0,
+        _products.insert(// .add() would put it at the bottom
+        0,
           Product(
             id: data['id'],
             title: 'New Product',
@@ -75,7 +74,6 @@ class _ProductsPageState extends State<ProductsPage> {
     }
   }
 
-  // PUT - edit product.
   Future<void> _editProduct(Product product) async {
     final response = await http.put(
       Uri.parse('https://fakestoreapi.com/products/${product.id}'),
@@ -102,7 +100,6 @@ class _ProductsPageState extends State<ProductsPage> {
     }
   }
 
-  // DELETE - delete product
   Future<void> _deleteProduct(int id) async {
     final response = await http.delete(
       Uri.parse('https://fakestoreapi.com/products/$id'),
@@ -154,8 +151,6 @@ class _ProductsPageState extends State<ProductsPage> {
   }
 }
 
-// StatelessWidget - just displays product info
-// receives onEdit and onDelete from parent
 class ProductCard extends StatelessWidget {
   final Product product;
   final VoidCallback onEdit;
